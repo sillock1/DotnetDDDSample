@@ -24,12 +24,13 @@ internal static class Extensions
             if (builder.Environment.IsDevelopment())
             {
                 x.AddConsumers(Assembly.GetExecutingAssembly());
+                var connectionString = builder.Configuration.GetConnectionString("RabbitMQ");
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("localhost", "/", h =>
+                    cfg.Host(new Uri(connectionString!), h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(builder.Configuration.GetValue<string>("RabbitMQ:Username"));
+                        h.Password(builder.Configuration.GetValue<string>("RabbitMQ:Password"));
                     });
                     cfg.ConfigureEndpoints(context);
                 });

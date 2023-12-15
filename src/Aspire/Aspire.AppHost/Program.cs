@@ -1,6 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var rabbitMq = builder.AddRabbitMQContainer("EventBus");
+var rabbitMq = builder.AddRabbitMQContainer("RabbitMQ");
 var postgres = builder.AddPostgresContainer("postgres");
 
 var catalogDb = postgres.AddDatabase("CatalogDB");
